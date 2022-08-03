@@ -18,6 +18,8 @@ class GreedyBestFirstSearch(Level):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit(1)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return False
 
             curr = open_set.get()[2]
             if curr is self.target_node:

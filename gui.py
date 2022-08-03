@@ -102,7 +102,7 @@ class MainMenu(Menu):
                         ]
         self.texts = [
                       Text('Path Finding Visuaizer', 50, 'black', (WIDTH//3,HEIGHT//3), self.text_sprites, font=self.font_path),
-                      Text('By Asaf Brandwain', 30, 'black', (WIDTH//3,HEIGHT//2), self.text_sprites, font=self.font_path)
+                      Text('By Asaf Brandwain', 30, 'orangered', (WIDTH//3,HEIGHT//3 + 60), self.text_sprites, font=self.font_path)
                     ]
 
     def run_menu(self, event):
@@ -138,10 +138,12 @@ class ControlMenu(Menu):
         super().__init__(clock, main_image)
         self.texts = [
                     Text('Controls:', 50, 'black', (WIDTH//2,100), self.text_sprites, draw_in_center=True),
-                    Text('Esc - Go back', 36, 'black', (100,200), self.text_sprites, draw_in_center=False),
-                    Text('R - Random barriers', 36, 'black', (100,300), self.text_sprites, draw_in_center=False),
-                    Text('C - Clear grid', 36, 'black', (100,400), self.text_sprites, draw_in_center=False),
-                    Text('Enter - Run algorithm', 36, 'black', (100,500), self.text_sprites, draw_in_center=False)
+                    Text('Esc - Go back / Stop algorithms run', 36, 'black', (100,200), self.text_sprites, draw_in_center=False),
+                    Text('Enter - Run algorithm', 36, 'black', (100,300), self.text_sprites, draw_in_center=False),
+                    Text('R - Random barriers', 36, 'black', (100,400), self.text_sprites, draw_in_center=False),
+                    Text('C - Clear grid', 36, 'black', (100,500), self.text_sprites, draw_in_center=False),
+                    Text('Left click - Add start/target/barrier', 36, 'black', (100,600), self.text_sprites, draw_in_center=False),
+                    Text('Right click - Remove start/target/barrier', 36, 'black', (100,700), self.text_sprites, draw_in_center=False)
                     ]
     
     def run_menu(self, event):

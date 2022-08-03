@@ -15,6 +15,8 @@ class BreadthFirstSearch(Level):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit(1)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return False
 
             curr = q.popleft()
             if curr is self.target_node:

@@ -22,6 +22,8 @@ class AStarSearch(Level):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit(1)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return False
 
             curr = open_set.get()[2]
             open_set_members.remove(curr)
