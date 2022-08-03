@@ -14,4 +14,4 @@ Currently supports the following algorithms:
 
 ## TBD
 - Add maze generation algorithms for the grid.
-- Add configurabel settings.
+- Add configurable settings.
