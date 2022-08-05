@@ -1,6 +1,6 @@
-# Path Finding Visualizer
+# Path Finding Visualizer  
 
-https://user-images.githubusercontent.com/83274722/183076484-e35dc115-8123-4b37-b752-653b51d49101.mp4
+https://user-images.githubusercontent.com/83274722/183077296-ea9ba290-4d29-4420-ae93-ea23cd5e45a1.mp4
 
 
 Path finding visualization project made in python using the pygame module.  
@@ -18,7 +18,7 @@ Currently supports the following path finding algorithms:
   
 Currently supports the following maze generation algorithms:  
 - Recursive division  
-  
+
 ## TBD  
 - Add more maze generation algorithms for the grid.
 - Add configurable settings.
