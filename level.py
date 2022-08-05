@@ -149,17 +149,19 @@ class Level:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.running = False
+                        
                     if event.key == pygame.K_c:
                         self.clear_grid()
+
                     if event.key == pygame.K_r:
                         self.clear_grid()
                         self.random_barriers()
+
                     if event.key == pygame.K_m:
                         self.clear_grid()
                         self.wall_maze()
                         self.recursive_division(0,self.rows-1, 0,self.cols-1)
-                    if event.key == pygame.K_n:
-                        self.spaced_maze()
+
                     if event.key == pygame.K_RETURN:
                         self.update_neighbors()
                         if self.start_node is None or self.target_node is None:
