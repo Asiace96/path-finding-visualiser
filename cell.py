@@ -29,6 +29,7 @@ class Cell(pygame.sprite.Sprite):
     def get_pos(self):
         return self.row, self.col
 
+
     def reset(self):
         self.color = 'grey30'
         self.start_node = False
@@ -39,12 +40,10 @@ class Cell(pygame.sprite.Sprite):
 
     def make_start(self):
         self.reset()
-        #self.color = 'blue'
         self.start_node = True
 
     def make_target(self):
         self.reset()
-        #self.color = 'red'
         self.target_node = True
     
     def make_barrier(self):
@@ -62,6 +61,7 @@ class Cell(pygame.sprite.Sprite):
 
     def make_path(self):
         self.color = 'midnightblue'
+        self.is_path = True
 
     def update_neighbors(self, grid):
         self.neighbors = {}
@@ -104,6 +104,7 @@ class Cell(pygame.sprite.Sprite):
         if self.target_node: self.color = 'yellow'
         
         self.image.fill(self.color)
+        #pygame.draw.rect(self.screen, self.color, self.rect, border_radius=5)
     
     def __lt__(self, other):
         return False

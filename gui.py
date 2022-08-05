@@ -69,7 +69,7 @@ class Menu:
     def run(self):
         while self.running:
             self.action = None
-            self.screen.fill('grey70')
+            self.screen.fill('grey30')
             self.screen.blit(self.main_image, (WIDTH//2,HEIGHT//3))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -101,8 +101,8 @@ class MainMenu(Menu):
                         Button(50,HEIGHT*0.9, 260,50, 'green', self.button_sprites, font_size=25, text='Greedy Best First Search')
                         ]
         self.texts = [
-                      Text('Path Finding Visuaizer', 50, 'black', (WIDTH//3,HEIGHT//3), self.text_sprites, font=self.font_path),
-                      Text('By Asaf Brandwain', 30, 'orangered', (WIDTH//3,HEIGHT//3 + 60), self.text_sprites, font=self.font_path)
+                      Text('Path Finding Visualizer', 50, 'white', (WIDTH//3,HEIGHT//3), self.text_sprites, font=self.font_path),
+                      Text('By Asaf Brandwain', 30, 'white', (WIDTH//3,HEIGHT//3 + 60), self.text_sprites, font=self.font_path)
                     ]
 
     def run_menu(self, event):
@@ -137,13 +137,14 @@ class ControlMenu(Menu):
     def __init__(self, clock, main_image):
         super().__init__(clock, main_image)
         self.texts = [
-                    Text('Controls:', 50, 'black', (WIDTH//2,100), self.text_sprites, draw_in_center=True),
-                    Text('Esc - Go back / Stop algorithms run', 36, 'black', (100,200), self.text_sprites, draw_in_center=False),
-                    Text('Enter - Run algorithm', 36, 'black', (100,300), self.text_sprites, draw_in_center=False),
-                    Text('R - Random barriers', 36, 'black', (100,400), self.text_sprites, draw_in_center=False),
-                    Text('C - Clear grid', 36, 'black', (100,500), self.text_sprites, draw_in_center=False),
-                    Text('Left click - Add start/target/barrier', 36, 'black', (100,600), self.text_sprites, draw_in_center=False),
-                    Text('Right click - Remove start/target/barrier', 36, 'black', (100,700), self.text_sprites, draw_in_center=False)
+                    #Text('Controls', 70, 'white', (WIDTH//2,100), self.text_sprites, draw_in_center=True),
+                    Text('Esc - Go back / Stop algorithms run', 36, 'white', (100,200), self.text_sprites, draw_in_center=False),
+                    Text('Enter - Run algorithm', 36, 'white', (100,300), self.text_sprites, draw_in_center=False),
+                    Text('R - Random barriers', 36, 'white', (100,400), self.text_sprites, draw_in_center=False),
+                    Text('C - Clear grid', 36, 'white', (100,500), self.text_sprites, draw_in_center=False),
+                    Text('Left click - Add start/target/barrier', 36, 'white', (100,600), self.text_sprites, draw_in_center=False),
+                    Text('Right click - Remove start/target/barrier', 36, 'white', (100,700), self.text_sprites, draw_in_center=False),
+                    Text('M - Generate Maze (recursive division)', 36, 'white', (100,800), self.text_sprites, draw_in_center=False)
                     ]
     
     def run_menu(self, event):

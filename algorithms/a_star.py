@@ -48,6 +48,6 @@ class AStarSearch(Level):
             neighbors_group.update(self)
             neighbors_group.draw(self.screen)
             pygame.display.flip()
-            self.clock.tick(200)
+            self.clock.tick(300)
 
         return False
