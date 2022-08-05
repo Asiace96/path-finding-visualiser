@@ -1,21 +1,26 @@
-# Path Finding Visualizer
+# Path Finding Visualizer  
 
-Path finding visualization project made in python using the pygame module.  
-  
-This is a personal project for the purposes of learning and improving.  
+https://user-images.githubusercontent.com/83274722/183077296-ea9ba290-4d29-4420-ae93-ea23cd5e45a1.mp4
+
+
+An interactive Python application that visualizes different pathfinding computer algorithms for the user.  
+This is a personal project for the purposes of learning and improving, made using the pygame module.
 
 ## Features
-Graphical user interface.  
-  
-Currently supports the following path finding algorithms:  
+Graphical user interface, with the ability to place the starting/target position as well as walls on the grid.  
+
+### Currently supports the following path finding algorithms  
 - Breadth first search
 - Depth first search
 - A* search
 - Greedy best first search  
   
-Currently supports the following maze generation algorithms:  
+### Currently supports the following maze generation algorithms  
 - Recursive division  
   
-## TBD
-- Add more maze generation algorithms for the grid.
+### Other
+- Function for random wall placement  
+
+## To be done
+- Add more maze generation algorithms.
 - Add configurable settings.
