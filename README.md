@@ -3,7 +3,7 @@
 https://user-images.githubusercontent.com/83274722/183077296-ea9ba290-4d29-4420-ae93-ea23cd5e45a1.mp4
 
 
-An interactive Python application that visualizes different pathfinding computer algorithms for the user.
+An interactive Python application that visualizes different pathfinding computer algorithms for the user.  
 This is a personal project for the purposes of learning and improving, made using the pygame module.
 
 ## Features
