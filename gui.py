@@ -94,7 +94,7 @@ class MainMenu(Menu):
     def __init__(self, clock, main_image):
         super().__init__(clock, main_image)
         self.buttons = [
-                        Button(50,70, 260,50, 'red', self.button_sprites, font_size=25, text='Controls'),
+                        Button(50,HEIGHT*0.05, 260,50, 'red', self.button_sprites, font_size=25, text='Controls'),
                         Button(50,HEIGHT*0.6, 260,50, 'green', self.button_sprites, font_size=25, text='Breadth First Search'),
                         Button(50,HEIGHT*0.7, 260,50, 'green', self.button_sprites, font_size=25, text='Depth First Search'),
                         Button(50,HEIGHT*0.8, 260,50, 'green', self.button_sprites, font_size=25, text='A* Search'),
@@ -138,13 +138,13 @@ class ControlMenu(Menu):
         super().__init__(clock, main_image)
         self.texts = [
                     #Text('Controls', 70, 'white', (WIDTH//2,100), self.text_sprites, draw_in_center=True),
-                    Text('Esc - Go back / Stop algorithms run', 36, 'white', (100,200), self.text_sprites, draw_in_center=False),
-                    Text('Enter - Run algorithm', 36, 'white', (100,300), self.text_sprites, draw_in_center=False),
-                    Text('R - Random barriers', 36, 'white', (100,400), self.text_sprites, draw_in_center=False),
-                    Text('C - Clear grid', 36, 'white', (100,500), self.text_sprites, draw_in_center=False),
-                    Text('Left click - Add start/target/barrier', 36, 'white', (100,600), self.text_sprites, draw_in_center=False),
-                    Text('Right click - Remove start/target/barrier', 36, 'white', (100,700), self.text_sprites, draw_in_center=False),
-                    Text('M - Generate Maze (recursive division)', 36, 'white', (100,800), self.text_sprites, draw_in_center=False)
+                    Text('Esc - Go back / Stop algorithms run', 36, 'white', (100,HEIGHT*0.2), self.text_sprites, draw_in_center=False),
+                    Text('Enter - Run algorithm', 36, 'white', (100,HEIGHT*0.3), self.text_sprites, draw_in_center=False),
+                    Text('R - Random barriers', 36, 'white', (100,HEIGHT*0.4), self.text_sprites, draw_in_center=False),
+                    Text('C - Clear grid', 36, 'white', (100,HEIGHT*0.5), self.text_sprites, draw_in_center=False),
+                    Text('Left click - Add start/target/barrier', 36, 'white', (100,HEIGHT*0.6), self.text_sprites, draw_in_center=False),
+                    Text('Right click - Remove start/target/barrier', 36, 'white', (100,HEIGHT*0.7), self.text_sprites, draw_in_center=False),
+                    Text('M - Generate Maze (recursive division)', 36, 'white', (100,HEIGHT*0.8), self.text_sprites, draw_in_center=False)
                     ]
     
     def run_menu(self, event):
