@@ -9,18 +9,18 @@ This is a personal project for the purposes of learning and improving, made usin
 ## Features
 Graphical user interface, with the ability to place the starting/target position as well as walls on the grid.  
 
-### Currently supports the following path finding algorithms  
+#### Currently supports the following path finding algorithms  
 - Breadth first search
 - Depth first search
 - A* search
 - Greedy best first search  
   
-### Currently supports the following maze generation algorithms  
+#### Currently supports the following maze generation algorithms  
 - Recursive division  
   
-### Other
+#### Other
 - Function for random wall placement  
 
-## To be done
+## To Do
 - Add more maze generation algorithms.
 - Add configurable settings.
