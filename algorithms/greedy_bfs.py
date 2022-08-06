@@ -28,7 +28,7 @@ class GreedyBestFirstSearch(Level):
 
             neighbors_group = pygame.sprite.Group()
             for neighbor in list(curr.neighbors.values()):
-                if not neighbor.visited and not neighbor.queued:
+                if not neighbor.visited and not neighbor in self.came_from:
                     count += 1
                     open_set.put((score[neighbor],count,neighbor))
                     neighbor.queue()

@@ -14,6 +14,7 @@ class Cell(pygame.sprite.Sprite):
 
         # cell state
         self.visited = False
+        self.visited_v2 = False
         self.queued = False
         self.start_node = False
         self.target_node = False
@@ -37,6 +38,7 @@ class Cell(pygame.sprite.Sprite):
         self.barrier = False
         self.visited = False
         self.queued = False
+        self.visited_v2 = False
 
     def make_start(self):
         self.reset()
@@ -65,7 +67,7 @@ class Cell(pygame.sprite.Sprite):
 
     def visit_v2(self):
         self.color = 'aquamarine4'
-        self.visited = True
+        self.visited_v2 = True
 
     def make_path(self):
         self.color = 'midnightblue'

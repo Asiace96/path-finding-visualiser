@@ -1,4 +1,5 @@
 import pygame, sys, os
+import algorithms
 from settings import *
 from gui import MainMenu
 

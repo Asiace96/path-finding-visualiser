@@ -73,8 +73,7 @@ class BiDirectionalBFS(Level):
             curr_2.visit_v2()
             visited_start.append(curr_1)
             visited_target.append(curr_2)
-
-            if len(list(set(visited_start) & set(visited_target))) == 1:
+            if len(list(set(visited_start) & set(visited_target))) >= 1:
                 self.intersection = list(set(visited_start) & set(visited_target))[0]
                 return True
 

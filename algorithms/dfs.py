@@ -25,7 +25,7 @@ class DepthFirstSearch(Level):
 
             neighbors_group = pygame.sprite.Group()
             for neighbor in list(curr.neighbors.values()):
-                if not neighbor.visited and not neighbor.queued:
+                if not neighbor.visited and not neighbor in self.came_from:
                     neighbor.queue()
                     self.came_from[neighbor] = curr
                     s.append(neighbor)
