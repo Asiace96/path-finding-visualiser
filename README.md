@@ -13,8 +13,8 @@ Graphical user interface, with the ability to place the starting/target position
 ### Currently supports the following path finding algorithms  
 - Breadth first search
 - Depth first search
-- A* search
-- Greedy best first search  
+- A* search (Manhattan distance heuristic, LIFO tie-breaker)
+- Greedy best first search (Manhattan distance heuristic, LIFO tie-breaker)
   
   
 ### Currently supports the following maze generation algorithms  
