@@ -5,6 +5,7 @@ from algorithms import DepthFirstSearch
 from algorithms import AStarSearch
 from algorithms import GreedyBestFirstSearch
 from algorithms import BiDirectionalBFS
+from algorithms import BiDirectionalDFS
 
 class Text(pygame.sprite.Sprite):
     def __init__(self, text, size, color, pos, groups, draw_in_center=False, font=None):
@@ -96,11 +97,12 @@ class MainMenu(Menu):
         super().__init__(clock, main_image)
         self.buttons = [
                         Button(50,HEIGHT*0.05, 260,50, 'red', self.button_sprites, font_size=25, text='Controls'),
-                        Button(50,HEIGHT*0.5, 260,50, 'green', self.button_sprites, font_size=25, text='Breadth First Search'),
-                        Button(50,HEIGHT*0.6, 260,50, 'green', self.button_sprites, font_size=25, text='Depth First Search'),
-                        Button(50,HEIGHT*0.7, 260,50, 'green', self.button_sprites, font_size=25, text='A* Search'),
-                        Button(50,HEIGHT*0.8, 260,50, 'green', self.button_sprites, font_size=25, text='Greedy Best First Search'),
-                        Button(50,HEIGHT*0.9, 260,50, 'green', self.button_sprites, font_size=25, text='Bidirectional BFS')
+                        Button(50,HEIGHT*0.4, 260,50, 'green', self.button_sprites, font_size=25, text='Breadth First Search'),
+                        Button(50,HEIGHT*0.5, 260,50, 'green', self.button_sprites, font_size=25, text='Depth First Search'),
+                        Button(50,HEIGHT*0.6, 260,50, 'green', self.button_sprites, font_size=25, text='A* Search'),
+                        Button(50,HEIGHT*0.7, 260,50, 'green', self.button_sprites, font_size=25, text='Greedy Best First Search'),
+                        Button(50,HEIGHT*0.8, 260,50, 'green', self.button_sprites, font_size=25, text='Bi-directional BFS'),
+                        Button(50,HEIGHT*0.9, 260,50, 'green', self.button_sprites, font_size=25, text='Bi-directional DFS')
                         ]
         self.texts = [
                       Text('Path Finding Visualizer', 50, 'white', (WIDTH//3,HEIGHT//3), self.text_sprites, font=self.font_path),
@@ -133,8 +135,11 @@ class MainMenu(Menu):
             if self.action == 'Greedy Best First Search':
                 self.state = GreedyBestFirstSearch(self.clock)
                 self.state.run()
-            if self.action == 'Bidirectional BFS':
+            if self.action == 'Bi-directional BFS':
                 self.state = BiDirectionalBFS(self.clock)
+                self.state.run()
+            if self.action == 'Bi-directional DFS':
+                self.state = BiDirectionalDFS(self.clock)
                 self.state.run()
             
 

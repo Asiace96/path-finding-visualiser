@@ -17,6 +17,12 @@ class Level:
         self.start_node = None
         self.target_node = None
 
+        #for bidirectional
+        self.bi_directional = False
+        self.came_from_start = None
+        self.came_from_target = None
+        self.intersection = None
+
         self.running = True
 
 
@@ -70,6 +76,49 @@ class Level:
             group.draw(self.screen)
             pygame.display.update(current.rect)
             self.clock.tick(120)
+
+    # for bidirectional
+    def draw_path_v2(self):
+        self.intersection.make_path()
+        current_1 = self.intersection
+        current_2 = self.intersection
+        group = pygame.sprite.Group()
+        while current_1 in self.came_from_start and current_2 in self.came_from_target:
+            current_1 = self.came_from_start[current_1]
+            current_2 = self.came_from_target[current_2]
+            current_1.make_path()
+            current_2.make_path()
+
+            if current_1 is self.start_node:
+                while current_2 in self.came_from_target:
+                    current_2 = self.came_from_target[current_2]
+                    if current_2 is self.target_node:
+                        return
+                    current_2.make_path()
+                    group.add(current_2)
+                    group.update(self)
+                    group.draw(self.screen)
+                    pygame.display.flip()
+                    self.clock.tick(120)
+
+            if current_2 is self.target_node:
+                while current_1 in self.came_from_start:
+                    current_1 = self.came_from_start[current_1]
+                    if current_1 is self.start_node:
+                        return
+                    current_1.make_path()
+                    group.add(current_1)
+                    group.update(self)
+                    group.draw(self.screen)
+                    pygame.display.flip()
+                    self.clock.tick(120)
+
+            group.add(current_1, current_2, self.intersection)
+            group.update(self)
+            group.draw(self.screen)
+            pygame.display.flip()
+            self.clock.tick(120)
+
 
     def wall_maze(self):
         for i in range(self.rows):
@@ -170,7 +219,9 @@ class Level:
                             messagebox.showinfo('Alert','Need to place start node / target node')
                             break
                         path_found = self.run_algorithm()
-                        if path_found:
+                        if path_found and self.bi_directional:
+                            self.draw_path_v2()
+                        elif path_found:
                             self.draw_path()
                         else:
                             tkinter.Tk().withdraw()

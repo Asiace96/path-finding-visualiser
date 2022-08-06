@@ -14,7 +14,6 @@ class Cell(pygame.sprite.Sprite):
 
         # cell state
         self.visited = False
-        self.visited_v2 = False
         self.queued = False
         self.start_node = False
         self.target_node = False
@@ -22,6 +21,9 @@ class Cell(pygame.sprite.Sprite):
         self.neighbors = None
         #self.walls = {'left':None, 'right':None, 'up':None, 'down':None}
         self.color = 'grey30'
+
+        # for bidirectional
+        self.visited_v2 = False
 
         # sprite settings
         self.image = pygame.Surface((size-1,size-1))
