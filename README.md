@@ -15,6 +15,7 @@ Graphical user interface, with the ability to place the starting/target position
 - Depth first search
 - A* search (Manhattan distance heuristic, FIFO tie-breaker)
 - Greedy best first search (Manhattan distance heuristic, FIFO tie-breaker)
+- Bidirectional BFS
   
   
 ### Currently supports the following maze generation algorithms  
