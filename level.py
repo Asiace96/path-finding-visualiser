@@ -59,17 +59,17 @@ class Level:
 
     def draw_path(self):
         current = self.target_node
-        #group = pygame.sprite.Group()
+        group = pygame.sprite.Group()
         while current in self.came_from:
             current = self.came_from[current]
             if current is self.start_node:
                 break
             current.make_path()
-            #group.add(current)
-            #group.update(self)
-            #group.draw(self.screen)
-            #pygame.display.update(current.rect)
-            #self.clock.tick(120)
+            group.add(current)
+            group.update(self)
+            group.draw(self.screen)
+            pygame.display.update(current.rect)
+            self.clock.tick(120)
 
     def wall_maze(self):
         for i in range(self.rows):
@@ -117,10 +117,11 @@ class Level:
         self.cell_group.update(self)
         self.cell_group.draw(self.screen)
         pygame.display.flip()
+        self.clock.tick(FPS)
 
         if abs(min_row-max_row) < abs(min_col-max_col):
-            self.recursive_division(min_row, max_row, idx, max_col)
             self.recursive_division(min_row, max_row, min_col, idx)
+            self.recursive_division(min_row, max_row, idx, max_col)
         else:
             self.recursive_division(min_row, idx, min_col, max_col)
             self.recursive_division(idx, max_row, min_col, max_col)

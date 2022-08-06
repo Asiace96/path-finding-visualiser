@@ -59,6 +59,14 @@ class Cell(pygame.sprite.Sprite):
         self.color = 'turquoise4'
         self.visited = True
 
+    def queue_v2(self):
+        self.color = 'aquamarine3'
+        self.queued = True
+
+    def visit_v2(self):
+        self.color = 'aquamarine4'
+        self.visited = True
+
     def make_path(self):
         self.color = 'midnightblue'
         self.is_path = True
