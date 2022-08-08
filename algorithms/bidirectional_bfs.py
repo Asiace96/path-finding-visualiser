@@ -3,8 +3,8 @@ from level import Level
 from collections import deque
 
 class BiDirectionalBFS(Level):
-    def __init__(self, clock):
-        super().__init__(clock)
+    def __init__(self, clock, num_cols):
+        super().__init__(clock, num_cols)
         self.bi_directional = True
 
     def run_algorithm(self):
@@ -52,6 +52,6 @@ class BiDirectionalBFS(Level):
             neighbors_group.update(self)
             neighbors_group.draw(self.screen)
             pygame.display.flip()
-            self.clock.tick(300)
+            self.clock.tick(400)
 
         return False

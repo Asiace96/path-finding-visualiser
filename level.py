@@ -1,15 +1,16 @@
 import pygame, sys, random, tkinter
+from collections import deque
 from cell import Cell
-from settings import *
+from settings import FPS
 from tkinter import messagebox
 
 class Level:
-    def __init__(self, clock):
+    def __init__(self, clock, num_cols):
         self.screen = pygame.display.get_surface()
         self.clock = clock
-        self.rows = ROWS
-        self.cols = COLS
-        self.cell_size = CELL_SIZE
+        self.cols = num_cols
+        self.cell_size = self.screen.get_width() // self.cols
+        self.rows = self.screen.get_height() // self.cell_size
 
         self.cell_group = pygame.sprite.Group()
         self.grid = self.create_grid()
@@ -39,6 +40,16 @@ class Level:
             for cell in row:
                 cell.update_neighbors(self.grid)
     
+    def update_walls(self):
+        for row in self.grid:
+            for cell in row:
+                cell.update_walls(self.grid)
+    
+    def update_neighbors_for_maze(self):
+        for row in self.grid:
+            for cell in row:
+                cell.update_neighbors_for_maze(self.grid)
+    
     def clear_grid(self):
         self.start_node = None
         self.target_node = None
@@ -54,8 +65,8 @@ class Level:
     
     def get_clicked_node_pos(self):
         x,y = pygame.mouse.get_pos()
-        row = y // CELL_SIZE
-        col = x // CELL_SIZE
+        row = y // self.cell_size
+        col = x // self.cell_size
         return row,col   
 
     def h(self, p1, p2):
@@ -175,17 +186,76 @@ class Level:
             self.recursive_division(min_row, idx, min_col, max_col)
             self.recursive_division(idx, max_row, min_col, max_col)
 
-   # def barrier_grid(self):
-   #     for row in self.grid:
-   #         for cell in row:
-   #             cell.make_barrier()
-#
-   # def spaced_maze(self):
-   #     self.barrier_grid()
-   #     for i in range(self.rows):
-   #         for j in range(self.cols):
-   #             if i%2==0 and j%2==0:
-   #                 self.grid[i][j].reset()
+    def odd_walls(self):
+        for r, row in enumerate(self.grid):
+            for c, cell in enumerate(row):
+                if c%2==1 or r%2==1:
+                    cell.make_barrier()
+
+    def randomized_dfs(self):
+        visited = set()
+        s = deque()
+        sr,sc = random.randrange(0,self.rows,2), random.randrange(0,self.cols,2)
+        curr = self.grid[sr][sc]
+        visited.add(curr)
+        s.append(curr)
+
+        while s:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit(1)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return False
+
+            curr = s.pop()
+            unvisited = {}
+            for direction, neighbor in list(curr.maze_neighbors.items()):
+                if neighbor not in visited:
+                    unvisited[direction] = neighbor
+            if unvisited:
+                s.append(curr)
+                direction, neighbor = random.choice(list(unvisited.items()))
+                curr.walls[direction].reset()
+                visited.add(neighbor)
+                s.append(neighbor)
+
+            self.cell_group.update(self)
+            self.cell_group.draw(self.screen)
+            pygame.draw.rect(self.screen,'green',curr.rect)
+            pygame.display.flip()
+            self.clock.tick(FPS)
+                
+    def aldous_border(self):
+        visited = set()
+        to_visit = 0
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if i%2==0 and j%2==0:
+                    to_visit+=1
+        sr,sc = random.randrange(0,self.rows,2), random.randrange(0,self.cols,2)
+        curr = self.grid[sr][sc]
+        visited.add(curr)
+
+        while len(visited) < to_visit:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit(1)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return False
+            direction, neighbor = random.choice(list(curr.maze_neighbors.items()))
+            if neighbor not in visited:
+                curr.walls[direction].reset()
+                visited.add(neighbor)
+            curr = neighbor
+
+            self.cell_group.update(self)
+            self.cell_group.draw(self.screen)
+            pygame.draw.rect(self.screen,'green',curr.rect)
+            pygame.display.flip()
+            self.clock.tick(FPS)
+
 
     def run(self):
         self.screen.fill('black')
@@ -207,11 +277,25 @@ class Level:
                         self.clear_grid()
                         self.random_barriers()
 
-                    if event.key == pygame.K_m:
+                    if event.key == pygame.K_q:
                         self.clear_grid()
                         self.wall_maze()
                         self.recursive_division(0,self.rows-1, 0,self.cols-1)
 
+                    if event.key == pygame.K_w:
+                        self.clear_grid()
+                        self.odd_walls()
+                        self.update_walls()
+                        self.update_neighbors_for_maze()
+                        self.randomized_dfs()
+
+                    if event.key == pygame.K_e:
+                        self.clear_grid()
+                        self.odd_walls()
+                        self.update_walls()
+                        self.update_neighbors_for_maze()
+                        self.aldous_border()
+                        
                     if event.key == pygame.K_RETURN:
                         self.update_neighbors()
                         if self.start_node is None or self.target_node is None:
@@ -233,5 +317,6 @@ class Level:
             pygame.display.flip()
             self.clock.tick(FPS)
 
+    # Does nothing - hook for child classes to be run and implemented by
     def run_algorithm():
         pass

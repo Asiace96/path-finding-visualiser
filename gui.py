@@ -1,5 +1,5 @@
 import pygame, sys, os
-from settings import *
+from settings import FPS
 from algorithms import BreadthFirstSearch
 from algorithms import DepthFirstSearch
 from algorithms import AStarSearch
@@ -55,9 +55,11 @@ class Button(pygame.sprite.Sprite):
 
 
 class Menu:
-    def __init__(self, clock, main_image):
+    def __init__(self, clock):
         self.screen = pygame.display.get_surface()
-        self.main_image = main_image
+        self.screen_width = self.screen.get_width()
+        self.screen_height = self.screen.get_height()
+        self.main_image = pygame.image.load(os.path.join('assets', 'main_icon.png')).convert_alpha()
         self.font_path = os.path.join('assets', 'Ubuntu-Bold.ttf')
         self.clock = clock
         self.running = True
@@ -72,7 +74,7 @@ class Menu:
         while self.running:
             self.action = None
             self.screen.fill('grey30')
-            self.screen.blit(self.main_image, (WIDTH//2,HEIGHT//3))
+            self.screen.blit(self.main_image, (self.screen_width//2,self.screen_height//3))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -87,27 +89,31 @@ class Menu:
             pygame.display.flip()
             self.clock.tick(FPS)
     
+    # Does nothing - hook for child classes to be run and implemented by
     def run_menu(self, event):
         pass
 
 
 
 class MainMenu(Menu):
-    def __init__(self, clock, main_image):
-        super().__init__(clock, main_image)
+    def __init__(self, clock, num_cols):
+        super().__init__(clock)
         self.buttons = [
-                        Button(50,HEIGHT*0.05, 260,50, 'red', self.button_sprites, font_size=25, text='Controls'),
-                        Button(50,HEIGHT*0.4, 260,50, 'green', self.button_sprites, font_size=25, text='Breadth First Search'),
-                        Button(50,HEIGHT*0.5, 260,50, 'green', self.button_sprites, font_size=25, text='Depth First Search'),
-                        Button(50,HEIGHT*0.6, 260,50, 'green', self.button_sprites, font_size=25, text='A* Search'),
-                        Button(50,HEIGHT*0.7, 260,50, 'green', self.button_sprites, font_size=25, text='Greedy Best First Search'),
-                        Button(50,HEIGHT*0.8, 260,50, 'green', self.button_sprites, font_size=25, text='Bi-directional BFS'),
-                        Button(50,HEIGHT*0.9, 260,50, 'green', self.button_sprites, font_size=25, text='Bi-directional DFS')
+                        Button(50,self.screen_height*0.05, 260,50, 'red', self.button_sprites, font_size=25, text='Controls'),
+                        Button(50,self.screen_height*0.15, 260,50, 'red', self.button_sprites, font_size=25, text='Settings'),
+                        Button(50,self.screen_height*0.7, 260,50, 'green', self.button_sprites, font_size=25, text='Breadth First Search'),
+                        Button(50,self.screen_height*0.8, 260,50, 'green', self.button_sprites, font_size=25, text='Depth First Search'),
+                        Button(50,self.screen_height*0.9, 260,50, 'green', self.button_sprites, font_size=25, text='A* Search'),
+                        Button(400,self.screen_height*0.7, 260,50, 'green', self.button_sprites, font_size=25, text='Greedy Best First Search'),
+                        Button(400,self.screen_height*0.8, 260,50, 'green', self.button_sprites, font_size=25, text='Bi-directional BFS'),
+                        Button(400,self.screen_height*0.9, 260,50, 'green', self.button_sprites, font_size=25, text='Bi-directional DFS')
                         ]
         self.texts = [
-                      Text('Path Finding Visualizer', 50, 'white', (WIDTH//3,HEIGHT//3), self.text_sprites, font=self.font_path),
-                      Text('By Asaf Brandwain', 30, 'white', (WIDTH//3,HEIGHT//3 + 60), self.text_sprites, font=self.font_path)
+                      Text('Path Finding Visualizer', 50, 'white', (self.screen_width//3,self.screen_height//3), self.text_sprites, font=self.font_path),
+                      Text('By Asaf Brandwain', 30, 'white', (self.screen_width//3,self.screen_height//3 + 60), self.text_sprites, font=self.font_path)
                     ]
+        
+        self.num_cols = num_cols
 
     def run_menu(self, event):
         if event.type == pygame.KEYDOWN:
@@ -121,41 +127,45 @@ class MainMenu(Menu):
                 if button.is_hovered():
                     self.action = button.text
             if self.action == 'Controls':
-                self.state = ControlMenu(self.clock, self.main_image)
+                self.state = ControlMenu(self.clock)
+                self.state.run()
+            if self.action == 'Settings':
+                self.state = SettingsMenu(self.clock)
                 self.state.run()
             if self.action == 'Breadth First Search':
-                self.state = BreadthFirstSearch(self.clock)
+                self.state = BreadthFirstSearch(self.clock, self.num_cols)
                 self.state.run()
             if self.action == 'Depth First Search':
-                self.state = DepthFirstSearch(self.clock)
+                self.state = DepthFirstSearch(self.clock, self.num_cols)
                 self.state.run()
             if self.action == 'A* Search':
-                self.state = AStarSearch(self.clock)
+                self.state = AStarSearch(self.clock, self.num_cols)
                 self.state.run()
             if self.action == 'Greedy Best First Search':
-                self.state = GreedyBestFirstSearch(self.clock)
+                self.state = GreedyBestFirstSearch(self.clock, self.num_cols)
                 self.state.run()
             if self.action == 'Bi-directional BFS':
-                self.state = BiDirectionalBFS(self.clock)
+                self.state = BiDirectionalBFS(self.clock, self.num_cols)
                 self.state.run()
             if self.action == 'Bi-directional DFS':
-                self.state = BiDirectionalDFS(self.clock)
+                self.state = BiDirectionalDFS(self.clock, self.num_cols)
                 self.state.run()
             
 
 
 class ControlMenu(Menu):
-    def __init__(self, clock, main_image):
-        super().__init__(clock, main_image)
+    def __init__(self, clock):
+        super().__init__(clock)
         self.texts = [
-                    #Text('Controls', 70, 'white', (WIDTH//2,100), self.text_sprites, draw_in_center=True),
-                    Text('Esc - Go back / Stop algorithms run', 36, 'white', (100,HEIGHT*0.2), self.text_sprites, draw_in_center=False),
-                    Text('Enter - Run algorithm', 36, 'white', (100,HEIGHT*0.3), self.text_sprites, draw_in_center=False),
-                    Text('R - Random barriers', 36, 'white', (100,HEIGHT*0.4), self.text_sprites, draw_in_center=False),
-                    Text('C - Clear grid', 36, 'white', (100,HEIGHT*0.5), self.text_sprites, draw_in_center=False),
-                    Text('Left click - Add start/target/barrier', 36, 'white', (100,HEIGHT*0.6), self.text_sprites, draw_in_center=False),
-                    Text('Right click - Remove start/target/barrier', 36, 'white', (100,HEIGHT*0.7), self.text_sprites, draw_in_center=False),
-                    Text('M - Generate Maze (recursive division)', 36, 'white', (100,HEIGHT*0.8), self.text_sprites, draw_in_center=False)
+                    Text('Esc -      Go back / Cancel run', 22, 'white', (100,self.screen_height*0.05), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('Enter -      Run algorithm', 22, 'white', (100,self.screen_height*0.15), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('R -      Random barriers', 22, 'white', (100,self.screen_height*0.25), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('C -      Clear grid', 22, 'white', (100,self.screen_height*0.35), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('Left click -      Add start/target/barrier', 22, 'white', (100,self.screen_height*0.45), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('Right click -      Remove start/target/barrier', 22, 'white', (100,self.screen_height*0.55), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('Q -      Generate Maze (Recursive Division)', 22, 'white', (100,self.screen_height*0.65), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('W -      Generate Maze (Randomized DFS)', 22, 'white', (100,self.screen_height*0.75), self.text_sprites, draw_in_center=False, font=self.font_path),
+                    Text('E -      Generate Maze (Aldous Border, not recommended..)', 22, 'white', (100,self.screen_height*0.85), self.text_sprites, draw_in_center=False, font=self.font_path),
                     ]
     
     def run_menu(self, event):
@@ -163,4 +173,39 @@ class ControlMenu(Menu):
             if event.key == pygame.K_ESCAPE:
                 self.running = False
 
+
+class SettingsMenu(Menu):
+    def __init__(self, clock):
+        super().__init__(clock)
+        self.texts = [
+                    Text('Resolution:', 22, 'white', (100,self.screen_height*0.05), self.text_sprites, draw_in_center=False, font=self.font_path)
+                    ]
+
+
+        self.buttons = [
+                        Button(50,self.screen_height*0.15, 260,50, 'red', self.button_sprites, font_size=25, text='1280x720'),
+                        Button(50,self.screen_height*0.25, 260,50, 'red', self.button_sprites, font_size=25, text='1400x840'),
+                        Button(50,self.screen_height*0.35, 260,50, 'red', self.button_sprites, font_size=25, text='1500x900')
+                        ]
         
+    def run_menu(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                self.running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            for button in self.buttons:
+                if button.is_hovered():
+                    self.action = button.text
+            if self.action == '1280x720':
+                pygame.display.set_mode((1280,720))
+                self.state = MainMenu(self.clock, 80)
+                self.state.run()
+            if self.action == '1400x840':
+                pygame.display.set_mode((1400,840))
+                self.state = MainMenu(self.clock, 100)
+                self.state.run()
+            if self.action == '1500x900':
+                pygame.display.set_mode((1500,900))
+                self.state = MainMenu(self.clock, 150)
+                self.state.run()

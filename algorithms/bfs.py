@@ -3,8 +3,8 @@ from level import Level
 from collections import deque
 
 class BreadthFirstSearch(Level):
-    def __init__(self, clock):
-        super().__init__(clock)
+    def __init__(self, clock, num_cols):
+        super().__init__(clock, num_cols)
     
     def run_algorithm(self):
         self.came_from = {}

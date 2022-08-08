@@ -3,8 +3,8 @@ from level import Level
 from collections import deque
 
 class BiDirectionalDFS(Level):
-    def __init__(self, clock):
-        super().__init__(clock)
+    def __init__(self, clock, num_cols):
+        super().__init__(clock, num_cols)
         self.bi_directional = True
 
     def run_algorithm(self):

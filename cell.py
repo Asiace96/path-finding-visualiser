@@ -19,7 +19,8 @@ class Cell(pygame.sprite.Sprite):
         self.target_node = False
         self.barrier = False
         self.neighbors = None
-        #self.walls = {'left':None, 'right':None, 'up':None, 'down':None}
+        self.walls = None
+        self.maze_neighbors = None
         self.color = 'grey30'
 
         # for bidirectional
@@ -73,7 +74,6 @@ class Cell(pygame.sprite.Sprite):
 
     def make_path(self):
         self.color = 'midnightblue'
-        self.is_path = True
 
     def update_neighbors(self, grid):
         self.neighbors = {}
@@ -88,6 +88,37 @@ class Cell(pygame.sprite.Sprite):
 
         if self.col < self.total_cols - 1 and not grid[self.row][self.col + 1].barrier:
             self.neighbors['right'] = grid[self.row][self.col + 1]
+
+    def update_walls(self, grid):
+        self.walls = {}
+        if self.row < self.total_rows - 1 and grid[self.row + 1][self.col].barrier: 
+            self.walls['down'] = grid[self.row + 1][self.col]
+
+        if self.col > 0 and grid[self.row][self.col - 1].barrier:
+            self.walls['left'] = grid[self.row][self.col - 1]
+
+        if self.row > 0 and grid[self.row - 1][self.col].barrier:
+            self.walls['up'] = grid[self.row - 1][self.col]
+
+        if self.col < self.total_cols - 1 and grid[self.row][self.col + 1].barrier:
+            self.walls['right'] = grid[self.row][self.col + 1]
+        
+    def update_neighbors_for_maze(self, grid):
+        # for maze, neighbors considered to be second but next cell eg distance of 2
+        self.maze_neighbors = {}
+        if self.row < self.total_rows - 2 and not grid[self.row + 2][self.col].barrier:
+            self.maze_neighbors['down'] = grid[self.row + 2][self.col]
+
+        if self.col > 1 and not grid[self.row][self.col - 2].barrier:
+            self.maze_neighbors['left'] = grid[self.row][self.col - 2]
+
+        if self.row > 1 and not grid[self.row - 2][self.col].barrier:
+            self.maze_neighbors['up'] = grid[self.row - 2][self.col]
+
+        if self.col < self.total_cols - 2 and not grid[self.row][self.col + 2].barrier:
+            self.maze_neighbors['right'] = grid[self.row][self.col + 2]
+
+
 
     def left_clicked(self):
         return self.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]

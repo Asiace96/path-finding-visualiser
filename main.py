@@ -1,5 +1,4 @@
 import pygame, sys, os
-import algorithms
 from settings import *
 from gui import MainMenu
 
@@ -12,15 +11,13 @@ class Game():
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Path Finding Algorithm Visualizer')
-        main_icon = pygame.image.load(os.path.join('assets', 'main_icon.png')).convert_alpha()
         icon = pygame.image.load(os.path.join('assets', 'icon.png')).convert_alpha()
-        #title_font = os.path.join('assets', 'Ubuntu-Bold.ttf')
         pygame.display.set_icon(icon)
         self.clock = pygame.time.Clock()
 
     #----------------------- instantiate game state--------------------#
 
-        self.menu = MainMenu(self.clock, main_icon)
+        self.menu = MainMenu(self.clock, COLS)
     
     #---------------------- game loop ---------------------------------#
 
